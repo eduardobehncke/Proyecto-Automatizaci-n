@@ -77,7 +77,7 @@ Una aplicación web desplegada en Vercel con backend automatizado que:
 | **BACKEND · Automatización** | Flujo end-to-end con gatillo webhook/schedule y retry/error handling. | Código propio construido con copiloto (scripts Node/Python). | 🟡 En progreso | `src/backend/` |
 | **BACKEND · IA** | Al menos 1 llamada a LLM real con prompt versionado en archivo. | Agente con RAG / Guardrails + Evals documentados. | 🟡 En progreso | `src/prompts/optimizer_prompt.txt` |
 | **BACKEND · BBDD** | Persistencia real de datos o logs. | Supabase (Postgres) con esquema propio + RLS. | 🟢 Definido | `src/db/schema.sql` |
-| **FRONT · Touchpoint** | Explicación clara de gatillo, canal y entrega de resultado. | UI web propia en Vercel integrada al backend. | 🟡 En progreso | `src/ui/` |
+| **FRONT · Touchpoint** | Explicación clara de gatillo, canal y entrega de resultado. | UI web propia en React+Vite integrada al backend y lista para despliegue en Vercel. | 🟢 Completado | `src/` |
 
 ---
 
