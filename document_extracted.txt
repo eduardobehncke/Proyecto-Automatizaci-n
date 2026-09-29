@@ -1,0 +1,430 @@
+AUTOMATIZACIÓN E IA PARA MVPS  ·  MBAN UAI  ·  2026-B
+Proyecto Final
+Directrices, matriz de construcción, rúbricas y entregables
+
+Profesor: Benjamín Happey  ·  Versión 1.2 · 2026-B
+
+1  ·  VISIÓN GENERAL
+Qué es el proyecto y cuánto pesa
+
+El proyecto final es el cierre del curso. Lo desarrolla el grupo (hasta 5 personas) entre las sesiones 4 y 8, y vale el 40% de la nota. Es el momento en el que se aplica todo lo del curso — automatización, llamadas a LLM, el copiloto, persistencia, publicación — para construir algo real que resuelve un problema concreto.
+Hay dos tracks posibles según para quién se construye: un caso real con cliente (Track A) o un producto propio (Track B). Cada grupo elige uno al llenar el formulario de inscripción y lo confirma en el formulario de propuesta de la sesión 5.
+Importante sobre el alcance: el objetivo es entregar AL MENOS UN proceso identificable, automatizado de inicio a fin con IA, que impacte las métricas que definió el grupo. NO se trata de rellenar el proyecto con muchos módulos o features para sumar capas. Vale más un proceso completo, robusto y bien medido que cinco a medias.
+2  ·  TRACKS
+Los dos tracks (para quién se construye)
+
+Track A · Caso real
+El grupo resuelve un problema real de una empresa: externa (a través de su red, conocidos, contactos) o propia/familiar. Ambos sub-casos pesan igual. Lo distintivo de este track es que se debe cuantificar el valor que la solución entrega: ROI, métricas, ahorros, tiempo recuperado — y lo que cuesta operarla.
+Track B · Producto propio
+El grupo crea una solución de autoría propia: automatización, herramienta interna, bot, set de workflows monetizables, MVP de SaaS, etc. Lo que importa es que sea algo que el grupo creó para resolver un problema que el grupo identificó. Lo distintivo de este track es que se debe demostrar viabilidad con un estudio de mercado en regla: FODA, 5 fuerzas de Porter, entrevistas y modelo de negocio.
+Auto-pivot del Track A al Track B
+Si al cierre de la sesión 5 el grupo de Track A no consiguió acceso real a una empresa, pivota automáticamente al Track B sin penalización.
+El filtro VRR — obligatorio en los dos tracks
+Antes de elegir qué construir, el proceso elegido tiene que pasar el filtro VRR de la sesión 1 con las tres luces en verde: Valor (¿duele en plata o en horas?), Repetitividad (¿se hace igual cada semana?) y Reglas claras (¿se podría escribir la receta?). El veredicto va en la sección 3 del README con una línea de argumento por luz. Si una luz está en rojo, se debe cambiar de proceso, no de argumento: "haz que la marca se sienta premium" no es automatizable; "si el lead pide precio, envía el tarifario" sí.
+Cómo cuantificar — la receta y ejemplos reales
+Cuantificar no es inventar un ROI grande: es mostrar una cadena de números que cualquiera pueda auditar. La receta, en cinco pasos:
+Frecuencia: cuántas veces ocurre el proceso (consultas al día, reservas por fin de semana, expedientes por temporada).
+Costo unitario hoy: cuánto tarda cada vez o cuánto se pierde cada vez (minutos por caso, % de leads sin respuesta, CLP por venta perdida).
+Línea base mensual: frecuencia × costo unitario = horas/mes o CLP/mes que hoy se van en el problema.
+Después: cuánto de eso resuelve la solución (no siempre el 100%) y cuánto cuesta operarla al mes (README §9: tokens × volumen + servicios).
+Delta y supuestos: línea base − después − costo de operar = valor mensual neto. Al lado, cada supuesto con su origen: medido, dicho por el cliente o estimado.
+Así lo hicieron grupos del dictado anterior de este mismo curso (2026-1). Ninguno necesitó una planilla financiera: necesitó preguntar, medir y multiplicar.
+Proyecto (MBAn 2026-1)
+Línea base con cifras
+Resultado cuantificado
+Reservas de un restaurante familiar por WhatsApp (Track A)
+30 reservas por fin de semana × 7 minutos de gestión manual del dueño = 14 horas al mes pendiente del celular.
+Horas liberadas valorizadas en CLP, menos el costo de operar el flujo; proyección con supuestos declarados y plan de handoff completo (operador, accesos, alertas, costos).
+Alerta semanal de productos bajo rendimiento en tiendas de retail, Chile y Colombia (Track A)
+2 a 3 horas cada lunes armando el reporte a mano por tienda, con riesgo de error.
+2,5 horas por semana → 130 horas al año → 16 jornadas laborales recuperadas; −97% del tiempo del proceso.
+Vitrina de stock de termopaneles por medida + WhatsApp (Track A)
+70 consultas al mes, 30% sin respuesta → $1.050.000 en ventas perdidas.
+Piloto medido: 3 ventas recuperadas, $600.000 al mes; payback de la solución en 2,9 meses.
+Conciliación mensual de franquicias de una corredora inmobiliaria (Track A)
+4 horas por sucursal → 40 horas al mes de revisión manual, validado por el managing partner con evidencia de contacto.
+Tabla antes/después: 37,5 horas liberadas al mes = $562.500 CLP mensuales.
+Validación de antecedentes de admisión universitaria (Track A)
+Más de 1.000 expedientes por temporada revisados uno a uno contra reglas de negocio; horas y costos por temporada documentados.
+Piloto real con 94 casos procesados en 2 minutos; ahorro traducido a CLP.
+Respuesta a leads de una inmobiliaria por correo y WhatsApp (Track A)
+35 leads al mes, 6 a 8 horas de demora en la primera respuesta, 20% de leads perdidos.
+$837.000 al mes de valor neto; payback en ~3 meses; cada supuesto auditable.
+Inventario y pedidos a proveedores para restaurantes (Track B)
+Segmento y arquetipo definidos; tabla de frecuencia de quiebres de stock; Porter y FODA con Fudo, Toteat y otros referentes.
+5 conversaciones con disposición a pagar → pricing en 2 planes fundado en las entrevistas + north-star justificada + roadmap.
+Triage automático de incidentes para equipos de desarrollo chicos (Track B)
+ICP preciso (5 a 50 devs sin SRE), frecuencia del dolor y techo de mercado; 6 referentes en Porter y FODA.
+5 entrevistas documentadas (guion, análisis, capturas) → 3 planes con precio en CLP; north-star = organizaciones pagantes activas; roadmap v1-v4.
+Planificador de horarios para la toma de ramos (Track B)
+Dolor por semestre en horas, contexto y frecuencia; Porter y FODA con 5 referentes; encuesta con 35 respuestas verificadas.
+North-star: menos de 10 minutos por alumno para 220 usuarios; pricing y roadmap v1-v3. Las 4 Capas 1 con evidencia real.
+Lo que bajó nota en el 2026-1 en este bloque: dolor descrito solo con adjetivos y sin cifras (0 en dos sub-criterios de un grupo con muy buen handoff); 2 conversaciones cuando el mínimo eran 5; cero entrevistas y solo desk research; un pricing que nadie validó o muy por debajo de lo realista; ROI sin descontar el costo de operar. Lo que la subió: cifras que el cliente confirmó, un piloto aunque fuera corto, supuestos honestos y un handoff con nombre.
+3  ·  QUÉ CONSTRUIR
+La matriz de construcción
+
+Independiente del track, lo que el proyecto construye se organiza en una matriz simple. Cada vertical (Automatización, IA, BBDD, Front) tiene dos niveles: Capa 1 es lo mínimo obligatorio para entregar el proyecto. Capa 2 es bonus que suma a la nota.
+Las verticales se agrupan en BACKEND (Automatización + IA + BBDD) y FRONT (interfaz / touchpoint con el usuario).
+Vertical
+Capa 1 — obligatoria
+Capa 2 — bonus
+BACKEND · Automatización
+Flujo o proceso end-to-end con gatillo definido (webhook, formulario u horario), que maneja errores con las dos defensas del Bloque I: Retry On Fail (reintentos automáticos cuando una llamada falla) y rama de error (Error Trigger u equivalente que avisa al admin si el proceso se cae). Si no se usa n8n, el equivalente en el stack: reintentos + notificación de fallas.
+Código propio construido dirigiendo al agente de código (Antigravity u otro equivalente). Puede reemplazar n8n o complementarlo (script, Edge Function de Supabase, MCP, skill). Va con documentación de qué se pidió (la spec) + el código resultante.
+BACKEND · IA
+Al menos 1 llamada a un LLM (OpenAI, Anthropic, Gemini u otro) integrada al flujo. El prompt está versionado como archivo en el repositorio (no escondido dentro del nodo). El resultado del LLM se usa en pasos posteriores del flujo (no es decorativo).
+Una de estas opciones: (a) Agente IA con herramientas — el LLM decide qué herramienta llamar y la ejecuta. (b) Multi-agente con roles definidos que se coordinan. (c) Agente con RAG — recupera información desde la base de conocimiento y responde con contexto. La opción elegida va con guardrails (salida estructurada validada + reglas explícitas) y con evidencia de evals: un set de casos de prueba corrido contra el agente, con resultados documentados en el repo.
+BACKEND · BBDD
+Almacenamiento real para la información del proyecto en Sheets, Airtable u otra. Si el flujo no necesita BBDD para el negocio, mínimo se deben guardar logs de ejecución ahí.
+Supabase (Postgres) con esquema de tablas propio + RLS (Row Level Security: cada usuario solo accede a sus propios datos), como se construyó en el Bloque III.
+FRONT · Touchpoint / Interfaz
+Explicación clara de cómo el usuario final interactúa con la solución: qué la gatilla, por qué plataforma o canal, dónde recibe el resultado (ej. "el cliente recibe email a las 9am, gatillado por schedule diario").
+UI propia funcional construida dirigiendo al copiloto y publicada a una URL real (Vercel), integrada al backend. El usuario puede navegar el flujo principal completo — el mismo camino de la landing del Tomate en los labs.
+Cómo se traduce a nota: cumplir Capa 1 en las 4 verticales da el item A completo (4.0 pts) de la rúbrica de documentación. Cada Capa 2 que se sume da +0.25 (máximo +1.0, cap 7.0).
+4  ·  STACK
+Stack recomendado, libertad con justificación
+
+La base del curso son dos herramientas: Antigravity como agente de código y n8n para automatizar. Alrededor de esa base, el stack es libre: se puede usar cualquier otra herramienta que cumpla con los lineamientos y objetivos de aprendizaje del curso (APIs de LLM, Supabase, GitHub y Vercel son las referencias, no obligaciones). La matriz de la sección 3 define qué se evalúa por vertical, no qué herramienta específica usar. Si se reemplaza una pieza de la base por otra equivalente, se debe justificar por qué en el README.
+Ejemplos válidos de reemplazo:
+Postgres directo en vez de Supabase si no se necesita auth ni storage.
+Otro agente de código (Cursor, Claude Code, Cline) en vez de Antigravity si el equipo ya lo maneja.
+Make o Zapier en vez de n8n solo si se justifica por qué (ej. una integración específica).
+Otro hosting en vez de Vercel si el front vive mejor ahí (ej. un bot que no tiene página).
+5  ·  PLAZOS
+Timeline de entrega
+
+Cuándo
+Qué hace el grupo
+Sesión 4
+Se lanza el proyecto y se abre el formulario de inscripción: integrantes (hasta 5) y track tentativo.
+Sesión 5
+El grupo completa el formulario de propuesta (sin nota). Es el filtro: track, filtro VRR y alcance quedan definidos con el feedback del profesor.
+Sesión 7
+Tarea 2 — checkpoint de avance CON nota, en clase (ver sección 7). Vale la mitad de la nota de Tareas del curso.
+48h antes de la sesión 8
+Tag v1.0-final en el repo. Después del tag, los commits no cuentan para evaluación.
+Sesión 8
+Presentación en clase: 3 min pitch + 5 min demo + 4 min Q&A.
+Post-sesión 8 (48-72h)
+Se completa el formulario anónimo de evaluación cruzada de los compañeros.
+Las fechas exactas de cada sesión y de cada entrega se publican en webcursos. Este documento define la estructura; el calendario vive allá.
+Cómo se reparten los 12 minutos en la sesión 8
+3 min — Pitch ejecutivo: problema, solución, valor (Track A) o viabilidad (Track B).
+5 min — Demo en vivo de la solución funcionando con datos reales.
+4 min — Q&A defendiendo las decisiones técnicas.
+6  ·  LA PROPUESTA (SESIÓN 5)
+La propuesta: un formulario grupal, sin nota
+
+No es un informe: cada grupo completa un formulario (el link se publica en webcursos) antes de la sesión 5, una sola respuesta por grupo. No lleva nota, pero es obligatorio: es el filtro que evita que un grupo trabaje cuatro sesiones en algo que no califica. Las preguntas del formulario cubren exactamente lo que después se exige en el README, en versión corta:
+Nombre del grupo + integrantes + roles tentativos (incluido quién toma la cuantificación o el estudio de mercado).
+Track elegido (A o B) + por qué.
+El problema concreto. Track A: quién es el cliente, cómo el grupo accedió, qué dolor tiene. Track B: a quién apunta el producto, qué problema resuelve.
+El filtro VRR: las tres luces (Valor, Repetitividad, Reglas claras) con una línea de argumento por luz.
+La primera cifra. Track A: frecuencia y costo unitario del proceso hoy (la línea base, aunque sea estimada). Track B: los 3-5 referentes identificados y con quiénes se harán las entrevistas.
+Alcance tentativo: qué proceso se va a automatizar de punta a punta.
+Stack tentativo + qué se reemplaza de la base (n8n, Antigravity) y por qué.
+El riesgo principal identificado (acceso al cliente, datos, integración difícil, etc.).
+El profesor responde en la misma sesión 5 o por escrito dentro de los 3 días siguientes: verde (aprobada, el track queda bloqueado) o ámbar (el grupo ajusta y la revisión es asincrónica). Un proceso que no pasa el filtro VRR vuelve ámbar hasta que el grupo cambie de proceso. Un grupo de Track A que no logre validar acceso real a una empresa pasa automáticamente a Track B, sin penalización.
+7  ·  TAREA 2 (SESIÓN 7)
+El checkpoint de avance — con nota
+
+La sesión 7 incluye un sprint de avance del proyecto en clase. Ese avance se evalúa como Tarea 2 del curso (la mitad de la nota de Tareas). No es una presentación formal: mientras los grupos trabajan, el profesor pasa por cada mesa y los grupos muestran el avance corriendo en pantalla.
+Rúbrica de la Tarea 2 (escala 1 a 7)
+Item
+Puntos
+Qué se evalúa
+Base
+1.0
+Todos parten con esto.
+A · El esqueleto corre end-to-end
+3.0
+Gatillo → proceso → resultado visible, con datos de prueba, aunque el alcance todavía sea parcial. (1.5 si corre por tramos, con pasos a mano entre medio; 0 si no corre nada.)
+B · Repo al día
+2.0
+Repo creado con el profesor como colaborador + README con identificación, problema/solución y arquitectura preliminar + el avance real comiteado. (1.0 si el repo existe pero está vacío de contenido real; 0 sin repo.)
+C · Plan de cierre
+1.0
+En el README: qué falta, quién lo toma y el riesgo principal. Concreto y creíble. (0.5 si es vago; 0 sin plan.)
+Nota Tarea 2 máxima
+7.0
+
+La Tarea 2 no evalúa el resultado final: evalúa que el proyecto esté en marcha. Lo que se muestre ese día no compromete la nota del proyecto — los grupos pueden cambiar de rumbo después del checkpoint si el feedback lo amerita.
+8  ·  ENTREGABLE
+El entregable: un repositorio GitHub
+
+Cada grupo entrega un único repositorio GitHub privado, con la cuenta del profesor como colaborador (la cuenta se publica en webcursos). Ese repo es la fuente única de verdad: todo lo que se evalúa sale de ahí. Sin repo en plazo = nota Documentación 1.0.
+Estructura mínima del repo (3 elementos)
+proyecto-final-grupo-XX/├── README.md     ← Documento maestro (el único archivo con contenido obligatorio)├── src/          ← Todo lo que construyeron: workflows, prompts, código, schemas, etc.└── evidencia/    ← Screenshots, video corto de demo, contacto cliente (A) o conversaciones (B)
+Tres elementos. Eso es todo. Dentro de src/ se organiza libremente lo que se entrega: se pueden usar sub-carpetas como prompts/, flujo/, codigo/, o no. Si la organización se entiende, es válida.
+Estructura sugerida dentro de src/ (opcional, solo como referencia)
+src/├── flujo/        ← workflow.json de n8n o el código que lo reemplaza├── prompts/      ← Prompts usados, uno por archivo├── codigo/       ← Si construyeron código propio con el copiloto (Capa 2 Automatización)├── bbdd/         ← Schema SQL, config RLS, link al Sheet (Capa 2 BBDD)├── evals/        ← Set de casos de prueba y resultados (Capa 2 IA)└── ui/           ← Link a la URL publicada + screenshots (Capa 2 Front)
+El README.md · 11 secciones obligatorias
+El README es la fuente de verdad para evaluar. Si la evidencia no está referenciada desde el README, no se evalúa. Estas son las 11 secciones que debe tener:
+#
+Sección
+Qué contiene
+1
+Identificación
+Nombre del grupo, integrantes, track elegido (A o B), tipo declarado (automatización / PoC / MVP).
+2
+Resumen ejecutivo
+1 párrafo: qué construyeron, para quién, qué métrica mueve.
+3
+Problema, filtro VRR y solución
+El dolor + el veredicto VRR (una línea por luz: Valor, Repetitividad, Reglas claras) + la solución propuesta + por qué la eligieron.
+4
+Arquitectura
+1 diagrama (Excalidraw u otro) + descripción corta del flujo de datos.
+5
+Las 4 verticales
+Tabla con qué capa cumplieron en cada vertical + link al artefacto que lo prueba.
+6
+Touchpoint del usuario
+Cómo el usuario final gatilla la solución, por qué canal, dónde recibe el resultado.
+7
+Cómo correrlo
+Setup mínimo: credenciales mock, cómo importar el workflow o correr el código, dónde está el sheet/BBDD.
+8
+Sección track-específica
+Track A: cliente + contacto + métricas antes/después + cuantificación + handoff.  Track B: FODA + 5 fuerzas de Porter + demanda + modelo de negocio + métrica de éxito + roadmap.
+9
+Costos de operación
+Cuánto cuesta tener esto andando: tokens por ejecución × volumen mensual + servicios (n8n, Supabase, hosting). Un número en USD o CLP al mes, con el supuesto de volumen explícito.
+10
+Limitaciones y próximos pasos
+Qué quedó fuera, qué bugs conocen, qué harían con más tiempo.
+11
+Roles del equipo
+Quién hizo qué (para que la evaluación cruzada tenga referencia).
+Plantilla sugerida para la sección 5 del README (las 4 verticales)
+Vertical
+Capa cumplida
+Dónde está la evidencia
+Automatización
+Capa 1 / Capa 2
+/src/flujo/workflow.json + screenshot del canvas en /evidencia/auto.png
+IA
+Capa 1 / Capa 2
+/src/prompts/system.md + descripción del agente en README §5.2
+BBDD
+Capa 1 / Capa 2
+Link al Sheet o /src/bbdd/schema.sql + screenshot RLS
+Front
+Capa 1 / Capa 2
+README §6 (touchpoint) o la URL publicada en /src/ui/
+9  ·  EVALUACIÓN
+Cómo se calcula la nota
+
+Hay 3 instrumentos de evaluación, cada uno en escala 1 a 7 con base 1.0 (todos parten en 1.0). La nota final combina los 3.
+Rúbrica 1 · Documentación (escala 1 a 7)
+Item
+Puntos
+Qué evalúa
+Base
+1.0
+Todos parten con esto.
+A · Solución funcional end-to-end
+4.0
+Las 4 Capas 1 obligatorias cumplidas (1.0 por vertical).
+B · Diferenciador por track
+2.0
+Track A: ROI cuantificado (incluyendo costos de operación).  Track B: viabilidad demostrada (incluyendo unit economics).
+C · Bonus por Capa 2
++1.0 (cap 7.0)
++0.25 por cada vertical con Capa 2 cumplida. Sirve como margen/seguro, no como camino al 7.0.
+Nota Documentación máxima
+7.0
+
+Rúbrica 2 · Presentación (escala 1 a 7)
+Item
+Puntos
+Qué evalúa
+Base
+1.0
+Todos parten con esto.
+D · Pitch + demo en vivo
+3.0
+Narrativa clara, demo funciona.
+E · Q&A / defensa técnica
+3.0
+Defienden cada decisión técnica.
+Nota Presentación máxima
+7.0
+
+Rúbrica 3 · Evaluación cruzada (escala 1 a 7)
+Después de la sesión 8, cada integrante recibe un formulario anónimo donde califica a sus pares en escala 1 a 7. La nota de evaluación cruzada de cada persona es el promedio de las notas que recibió de sus compañeros. No hay autocalificación. El formulario también pregunta por contribución cualitativa.
+La matemática
+Nota Trabajo (grupal)    =  0.7 × Nota Documentación  +  0.3 × Nota PresentaciónNota Final (individual)  =  0.7 × Nota Trabajo         +  0.3 × Nota Eval Cruzada
+Ejemplos de cómo cae un proyecto en la rúbrica de Documentación
+Caso
+A
+B
+C
+Doc total (base 1.0 incluida)
+Automatización en n8n + Sheets + LLM básico, cliente real con ROI y costos medidos (Capa 1 perfecta, sin Capa 2)
+4.0
+2.0
+0
+7.0
+Igual al anterior pero con Front Capa 1 a medias + 2 Capa 2 (Supabase RLS + agente con RAG)
+3.5
+2.0
+0.5
+7.0
+Solución completa (UI publicada + Supabase + agente con evals + código propio) con producto propio y demanda probada
+4.0
+2.0
+1.0
+7.0 (cap)
+Automatización flaca: corre pero sin defensas, prompt improvisado dentro del nodo, sin BBDD
+2.0
+1.5
+0
+4.5
+10  ·  DETALLE DE LA RÚBRICA
+Sub-criterios por item
+
+A · Solución funcional end-to-end (4.0 pts)
+Cada Capa 1 obligatoria vale 1.0. Se evalúa por vertical:
+Vertical
+1.0 — cumple
+0.5 — parcial
+0 — no cumple
+Automatización
+El flujo corre solo (gatillo definido) y maneja errores con las dos defensas: Retry On Fail y rama de error que avisa. Probado: la evidencia de las corridas está en evidencia/.
+Corre solo pero falta una de las dos defensas, o las pruebas no están documentadas.
+No corre solo, requiere intervención manual cada ejecución, o no implementa ninguna defensa.
+IA
+Llamada LLM integrada al flujo, prompt versionado como archivo del repo, resultado usado en pasos posteriores.
+Hay llamada LLM pero el prompt está improvisado dentro del nodo, o el resultado no se usa.
+Sin llamada LLM real (respuestas hardcoded o fake).
+BBDD
+Información del proyecto guardada en BBDD con estructura explicada en el repo. Si no aplica al negocio: logs de ejecución guardados en BBDD.
+BBDD existe pero estructura no explicada, o falta alguno de los registros mínimos (negocio o logs).
+Sin BBDD: ni datos del negocio ni logs.
+Front / touchpoint
+Explicación clara: qué gatilla la solución, por qué plataforma, dónde aparece el resultado.
+A medias (ej. menciona el canal pero no el gatillo).
+Sin explicación de cómo interactúa el usuario.
+B · Diferenciador por track (2.0 pts)
+Track A · ROI cuantificado
+Cada sub-criterio vale 0.5:
+Sub-criterio
+Excelente (0.5)
+Insuficiente (0)
+Cliente identificado + evidencia de contacto
+Email, acta, foto o screenshot del intercambio con persona identificable.
+Sin evidencia o cliente genérico.
+Dolor descrito + cifras del estado actual
+Cómo es hoy el proceso, con cifras reales (tiempo, $, errores, frecuencia).
+Descripción vaga, sin cifras.
+Resultado post-MVP cuantificado, neto de costos
+Cuánto cambia el proceso con la solución, traducido a CLP o horas/mes, contrastado con el costo de operarla (README §9).
+Sin cuantificación clara, o valor declarado sin descontar lo que cuesta operar.
+Plan de handoff
+Cómo queda viviendo la solución después del curso (quién la opera, cómo accede, qué pasa si algo falla).
+Sin plan.
+Track B · Viabilidad demostrada
+Cada sub-criterio vale 0.5:
+Sub-criterio
+Excelente (0.5)
+Insuficiente (0)
+Problema + usuario objetivo definidos
+Quién sufre el dolor, en qué contexto, con qué frecuencia.
+Definición vaga o sin usuario claro.
+FODA + 5 fuerzas de Porter
+Los dos frameworks aplicados a la propuesta, con implicancias (no solo la matriz), y 3-5 referentes identificados y comparados (qué hacen, qué cobran, en qué se diferencia).
+Solo uno de los dos, matrices sin implicancias, o sin referentes comparados.
+Prueba de demanda
+Mínimo 5 conversaciones con potenciales usuarios documentadas (entrevistas escritas/grabadas, encuestas con respuestas reales, o feedback registrado).
+"Todos quieren esto" sin evidencia, o menos de 5 conversaciones.
+Modelo de negocio + métrica de éxito + roadmap
+Pricing tentativo con unit economics básicos (qué cuesta servir a un usuario — README §9 — vs qué paga), la métrica north-star y próximos pasos accionables.
+Falta alguno de los 3, o el pricing ignora los costos.
+C · Bonus por Capa 2 (+1.0 máx, cap 7.0)
+Capa 2
+Bonus
+Qué tiene que mostrar
+Automatización Capa 2
++0.25
+Código propio construido dirigiendo al agente de código (Antigravity u otro), con la spec de lo pedido + el código resultante en el repo.
+IA Capa 2
++0.25
+Una de: (a) agente con herramientas / (b) multi-agente con roles / (c) agente con RAG. Más guardrails (salida estructurada validada + reglas explícitas) y evals: casos de prueba corridos contra el agente con resultados en el repo.
+BBDD Capa 2
++0.25
+Supabase (Postgres) con esquema propio + RLS configurado.
+Front Capa 2
++0.25
+UI propia funcional construida con el copiloto y publicada a URL (Vercel u otro hosting), integrada al backend, flujo principal navegable.
+D · Pitch + demo en vivo (3.0 pts)
+Nivel
+Puntos
+Cuándo se asigna
+Excelente
+3.0
+Narrativa clara, demo en vivo fluida, 12 min bien usados.
+Aceptable
+1.5
+Demo funciona pero pitch desordenado o sin foco.
+Insuficiente
+0.0
+Demo no funciona o pitch sin estructura.
+E · Q&A / defensa técnica (3.0 pts)
+Nivel
+Puntos
+Cuándo se asigna
+Excelente
+3.0
+Defienden cada decisión técnica, responden con criterio aunque no sepan todo.
+Aceptable
+1.5
+Algunas respuestas vagas pero entienden lo básico.
+Insuficiente
+0.0
+No se pueden defender decisiones del propio proyecto.
+El Q&A es real. Si no se puede defender una decisión técnica concreta del propio proyecto, el item E baja. Se puede usar IA para construir, pero se debe entender lo que se entrega.
+11  ·  POLÍTICAS
+Las reglas del juego
+
+Política de IA
+La IA está bienvenida para construir el proyecto: Antigravity, Cursor, Claude Code, Cline, ChatGPT, lo que se prefiera.
+Toda parte generada por IA tiene que ser entendida por quien la presenta.
+El Q&A de la sesión 8 es el filtro: si no se puede defender una decisión técnica del propio proyecto, baja el item E.
+"No sé, lo escribió la IA" baja la nota.
+Política de re-uso (y el Tomate)
+Se pueden reusar todos los patrones y técnicas del curso: la arquitectura de la Tarea 1, la landing, el esquema con RLS, el RAG y los evals de los labs. Para eso se construyeron.
+Lo que no se puede: entregar El Tomate Mecánico como proyecto. Ni el flujo de la Tarea 1 ni el MVP de los labs re-etiquetado con otro nombre o logo. La arquitectura se copia; el problema, el cliente y los datos tienen que ser del grupo.
+Código o workflows de internet, otros cursos o repos públicos: OK si se citan y se entienden.
+Política anti-freerider
+El formulario de evaluación cruzada pregunta por contribución cualitativa, no solo por nota.
+Si el profesor recibe señales convergentes desde múltiples integrantes ("X no hizo nada"), puede bajar la nota individual adicionalmente o convocar a entrevista.
+La nota individual ya se ajusta por evaluación cruzada — pero hay piso si la conducta lo justifica.
+Política de entrega final
+Link al repo + tag/release v1.0-final 48 horas antes de la sesión 8.
+Después del tag, cualquier commit no cuenta para la evaluación.
+Sin repo entregado en plazo: nota Documentación = 1.0.
+Ausencias y recuperación
+Las ausencias se rigen por el anexo del syllabus del curso: con licencia médica aprobada por Secretaría, la Tarea 2 se recupera con una tarea individual extra definida por el profesor, y el proyecto final se maneja caso a caso según la situación del estudiante y del grupo.
+12  ·  FAQ
+Preguntas frecuentes
+
+¿Se debe tener cliente real para el Track A?
+Sí. Tiene que haber alguien específico que use o se beneficie de la solución. Puede ser una empresa externa o una propia/familiar. Si llegada la sesión 5 el grupo no consiguió acceso real, pivota a Track B sin penalización.
+¿Se puede hacer el proyecto solo?
+No. El proyecto es grupal por diseño. Si un estudiante se queda sin grupo, el profesor lo asigna a uno con cupo o se forma uno nuevo entre quienes estén en esa situación.
+¿Es obligatorio usar n8n? ¿O Antigravity?
+No y no. Antigravity y n8n son la base del curso, pero se puede reemplazar cualquier pieza por otra que cumpla los objetivos de aprendizaje si se justifica la decisión en el README. Lo que sí es obligatorio: cumplir Capa 1 en las 4 verticales, incluyendo al menos 1 llamada a un LLM real.
+¿Se puede entregar el Tomate de los labs adaptado a otro negocio?
+No como proyecto. El Tomate es el andamio del curso: su arquitectura se puede copiar entera (landing + BBDD + agente + RAG), pero aplicada a un problema, un cliente y datos que sean del grupo. Un Tomate con otro logo no es un proyecto — es el lab con más pasos.
+¿Qué pasa si en la sesión 7 un grupo casi no tiene avance?
+La Tarea 2 califica ese avance, así que la nota lo va a reflejar. Pero el proyecto sigue: el checkpoint existe justamente para que ningún grupo llegue a la sesión 8 descubriendo recién que está atrasado. Se puede usar para pedir ayuda: ese día el profesor pasa por las mesas.
+¿Qué cuenta como "prueba de demanda" en Track B?
+Mínimo 5 conversaciones con potenciales usuarios documentadas: entrevistas escritas o grabadas, encuestas con respuestas reales, o feedback registrado. Lo que no cuenta: "todos quieren esto" sin evidencia.
+¿La evaluación cruzada puede hacer reprobar a un estudiante?
+Puede bajar la nota considerablemente si el equipo asigna 1.0 unánime. Combinada con la política anti-freerider, sí, puede llevar a reprobar. Pero si el estudiante contribuye en serio, la evaluación cruzada lo beneficia.
+¿Se deben cumplir las 4 Capas 2 para sacar 7.0?
+No necesariamente. Las 4 Capa 2 dan el +1.0 que permite llegar a 7.0 en Documentación, pero la nota final combina Documentación, Presentación y Evaluación Cruzada. Si la solución cumple bien Capa 1 + el diferenciador del track y hay buena presentación, se puede sacar excelente nota con 1-2 Capas 2 bien hechas. El objetivo es un proceso end-to-end robusto, no un checklist de capas.
+
+
+MBAn UAI  ·  Automatización e IA para MVPs  ·  2026-B
