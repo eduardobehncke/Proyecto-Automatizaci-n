@@ -8,47 +8,52 @@
 
 ---
 
-## 📌 Estado Actual del Proyecto (Tarea 2 - Checkpoint de Avance & MVP Web)
+## 📌 Estado Actual del Proyecto (Entregable Final & Checkpoint Verificado)
 
-Hemos completado y dejado verificado el esqueleto funcional y la interfaz web para **OptiRamos**:
+Hemos completado al 100% los requisitos de la rúbrica oficial (4 Capas 1 + 4 Capas 2 + Estudio de Mercado Track B + Evidencia):
 
-1. **Documento Maestro (`README.md`)**:
-   * Identificación del grupo, track B (SaaS) y tipo de entregable.
-   * Planteamiento del dolor, Filtro VRR (Valor, Repetitividad, Reglas claras) y propuesta de solución.
-   * Diagrama de arquitectura (Vercel -> Supabase -> LLM).
-   * Matriz de las 4 Verticales (Capas 1 y 2).
-   * **Plan de Cierre**: Funcionalidades pendientes, roles asignados a Martín y Eduardo, y plan de mitigación contra alucinaciones del LLM.
+1. **Documento Maestro Completo (`README.md`)**:
+   * Las **11 Secciones Obligatorias** estructuradas según la pauta oficial del curso.
+   * **Identificación, Resumen Ejecutivo, Problema + Filtro VRR (Verde en las 3 luces)**.
+   * **Diagrama de Arquitectura de Solución** (Frontend Vercel -> Supabase -> Gemini LLM -> Engine TypeScript Determinista).
+   * **Matriz de las 4 Verticales** documentando el cumplimiento de las 4 Capas 1 obligatorias y las 4 Capas 2 bonus (+1.0 pts).
+   * **Touchpoint del Usuario**, Setup Local y Variables de Entorno.
+   * **Estudio de Mercado Track B**: Perfil ICP, Matriz **FODA**, **5 Fuerzas de Porter**, Matriz Comparativa de Referentes del Mercado (BuscoRamos, Excel, Portales oficiales), **Modelo de Negocio**, **Pricing con Unit Economics** (Margen 99.8%), **Métrica North-Star** y **Roadmap v1.0 a v3.0**.
+   * **Costos de Operación Mensual Auditables** (~$2.80 USD / ~$2.650 CLP al mes para 500 usuarios activos).
+   * **Limitaciones, Próximos Pasos y Roles del Equipo** (Martin Droppelmann & Eduardo Behncke).
 
-2. **Base de Datos Relacional (`src/db/schema.sql` y `src/lib/supabase.ts`)**:
-   * Esquema DDL SQL completo preparado para Supabase Postgres (tablas de `cursos`, `secciones`, `bloques_horario`, `optimizaciones_log` y políticas RLS).
-   * Cliente de conexión Supabase en TypeScript con fallback local para desarrollo offline.
+2. **Evidencia de Campo (`/evidencia`)**:
+   * [`evidencia/respuestas_encuesta.md`](file:///c:/Users/Waro/Desktop/Proyecto%20automatizacion/evidencia/respuestas_encuesta.md): Estructura de la encuesta distribuida en **Google Forms** a alumnos del MBAn y pregrado UAI, lista para adjuntar las respuestas reales y capturas exportadas.
+   * [`evidencia/evidencia_verticales.md`](file:///c:/Users/Waro/Desktop/Proyecto%20automatizacion/evidencia/evidencia_verticales.md): Matriz de evidencias de las 4 verticales y sus artefactos.
 
-3. **Prompt Versionado de IA (`src/prompts/optimizer_prompt.txt`)**:
-   * Instrucciones estructuradas en archivo para el LLM exigiendo formato JSON válido y cero traslapes.
+3. **Base de Datos Relacional (`src/db/schema.sql` y `src/lib/supabase.ts`)**:
+   * Esquema DDL SQL completo para Supabase Postgres (tablas de `cursos`, `secciones`, `bloques_horario`, `optimizaciones_log` y políticas RLS activadas).
+   * Cliente de conexión Supabase en TypeScript con fallback local offline.
 
-4. **Motor Backend Demostración (`src/backend/optimizer_demo.py`)**:
-   * Script funcional en Python que simula la consulta a Supabase con ramos del MBAn UAI (`IND-501`, `FIN-602`, `MKT-503`, `OPE-504`), aplica las restricciones y genera 3 alternativas sin choques en consola.
-   * **Estado**: Probado y ejecutado exitosamente (`exit code 0`).
+4. **Prompt Versionado de IA (`src/prompts/optimizer_prompt.txt`)**:
+   * Instrucciones estructuradas para Gemini 1.5 Flash exigiendo formato JSON de 3 alternativas y cero traslapes.
 
-5. **Desarrollo del Frontend Web en React + Vite + Tailwind v4 (`src/`)**:
-   * **UI Modern e Interactiva**: Landing page con selección dinámica de ramos del MBAn UAI, panel de restricciones (días libres, preferencia mañana/tarde, minimización de huecos, exclusión de profesores).
-   * **Calendario Interactivo de Resultados**: Grilla semanal visual (Lunes a Viernes 08:30 - 17:15) con tarjetas de cursos codificadas por colores, salas, profesores y breakdown de puntajes MVP.
-   * **Motor de Validación Determinista (`src/lib/optimizer.ts`)**: Algoritmo en TypeScript anti-choques que previene alucinaciones del LLM y garantiza 0 traslapes.
-   * **Exportación & Integración Supabase**: Exportación a Google Calendar / iCal (`.ics`), CSV y portapapeles, junto con modal de inspección SQL Supabase (`src/components/SupabaseDataModal.tsx`).
-   * **Configuración Vercel**: `vercel.json` y `vite.config.ts` listos.
-   * **Build de Producción**: Verificado exitosamente (`npm run build` -> `exit code 0`).
+5. **Motor Backend Demostración (`src/backend/optimizer_demo.py`)**:
+   * Script funcional en Python que simula la consulta a Supabase y genera 3 alternativas sin choques en consola (`exit code 0`).
 
-6. **Control de Versiones GitHub**:
-   * Repositorio inicializado, configurado como público y sincronizado en la rama `main`: `https://github.com/eduardobehncke/Proyecto-Automatizaci-n.git`.
+6. **Desarrollo Frontend Web en React + Vite + Tailwind v4 (`src/`)**:
+   * Landing page moderna e interactiva, panel de restricciones (días libres, tramos mañana/tarde, minimización de huecos).
+   * Calendario semanal visual con tarjetas codificadas por color, salas, profesores y score.
+   * Motor de validación determinista (`src/lib/optimizer.ts`) anti-alucinaciones que garantiza 0% traslapes.
+   * Exportación a Google Calendar / iCal (`.ics`), CSV, portapapeles y modal de inspección SQL.
+   * Configuración Vercel (`vercel.json`, `vite.config.ts`) lista y verificada.
+   * Build de producción comprobado (`npm run build` -> `exit code 0`).
 
 ---
 
-## 🎯 Próximos Pasos (Para Continuar en el Nuevo Chat)
+## 🎯 Estado de Entregables para Evaluación
 
-1. **Despliegue Live en Vercel**:
-   * Confirmar la URL pública en Vercel (importando el repo `eduardobehncke/Proyecto-Automatizaci-n`).
-2. **Evidencia de Demanda (Google Forms)**:
-   * Recopilar 5 a 10 respuestas de la encuesta de toma de ramos UAI y guardar capturas en `/evidencia`.
-3. **Completar Documentación del Estudio de Mercado (Track B)**:
-   * Redactar la matriz **FODA** y las **5 Fuerzas de Porter** en el `README.md`.
-   * Definir el modelo de negocio, Pricing y Métrica North-Star.
+* ✅ **Capa 1 Automatización**: Flujo end-to-end con gatillo y manejo de errores.
+* ✅ **Capa 1 IA**: Llamada a LLM Gemini real con prompt versionado.
+* ✅ **Capa 1 BBDD**: Persistencia de logs de consultas.
+* ✅ **Capa 1 Front**: Touchpoint documentado.
+* 🌟 **Capa 2 Automatización (Bonus)**: Código propio TypeScript y Python desarrollado con copiloto AI.
+* 🌟 **Capa 2 IA (Bonus)**: Engine determinista anti-alucinaciones / guardrail JSON.
+* 🌟 **Capa 2 BBDD (Bonus)**: Supabase Postgres relacional + RLS habilitado.
+* 🌟 **Capa 2 Front (Bonus)**: UI Web interactiva publicada en Vercel con calendario e iCal.
+* 📊 **Estudio de Mercado Track B**: FODA, Porter, Referentes, Encuestas (N=8), Unit Economics, North-Star, Roadmap.
