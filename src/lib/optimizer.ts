@@ -193,13 +193,15 @@ export function validarPropuestasLLM(
 }
 
 /**
- * Combina las propuestas validadas del LLM (primero) con las del motor determinista,
- * sin duplicar combinaciones, hasta completar `max` opciones.
+ * Combina las propuestas validadas del LLM con las del motor determinista, sin duplicar
+ * combinaciones, ordenadas por score (a igual score, primero la del LLM).
  */
 export function combinarOpciones(llm: OpcionHorario[], motor: OpcionHorario[], max = 3): OpcionHorario[] {
   const firmas = new Set(llm.map(o => firmaCombinacion(o.ramos)));
   const extra = motor.filter(o => !firmas.has(firmaCombinacion(o.ramos)));
-  return [...llm, ...extra].slice(0, max);
+  return [...llm, ...extra]
+    .sort((a, b) => b.score - a.score || (a.origen === 'llm' ? -1 : 0) - (b.origen === 'llm' ? -1 : 0))
+    .slice(0, max);
 }
 
 export function optimizarHorariosLocal(
