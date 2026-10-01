@@ -32,16 +32,20 @@ export const OptionCard: React.FC<OptionCardProps> = ({
             <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
               Opción #{numero}
             </span>
-            {numero === 1 && (
+            {opcion.origen === 'llm' ? (
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1">
                 <Star className="h-3 w-3 fill-amber-300" />
-                Recomendada por IA
+                Propuesta por Gemini
+              </span>
+            ) : (
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-500/20 text-slate-300 border border-slate-500/30">
+                Motor determinista
               </span>
             )}
           </div>
 
           <h3 className="text-lg font-bold text-white mt-1.5 flex items-center gap-2">
-            Combinación {numero}
+            {opcion.nombre || `Combinación ${numero}`}
             <span className="text-sm font-semibold text-emerald-400 flex items-center gap-1">
               <ShieldCheck className="h-4 w-4" /> 0 Choques
             </span>

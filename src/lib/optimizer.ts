@@ -1,4 +1,4 @@
-import { Curso, RestriccionesEstudiante, OpcionHorario, RamoCombinacion, BloqueHorario } from '../types';
+import { Curso, RestriccionesEstudiante, OpcionHorario, RamoCombinacion, BloqueHorario, PropuestaLLM } from '../types';
 import { COLOR_PALETTE } from '../data/mockCourses';
 
 function convertirMinutos(hora: string): number {
@@ -107,6 +107,101 @@ export function calcularHuecosYScore(combo: RamoCombinacion[], restricciones: Re
   };
 }
 
+function aRamoCombinacion(curso: Curso, sec: Curso['secciones'][number], index: number): RamoCombinacion {
+  return {
+    codigo: curso.codigo,
+    nombre: curso.nombre,
+    seccion: sec.seccion,
+    profesor: sec.profesor,
+    creditos: curso.creditos,
+    bloques: sec.bloques,
+    color: COLOR_PALETTE[index % COLOR_PALETTE.length].bg
+  };
+}
+
+function firmaCombinacion(ramos: RamoCombinacion[]): string {
+  return ramos.map(r => `${r.codigo}#${r.seccion}`).sort().join('|');
+}
+
+/**
+ * Guardrail anti-alucinaciones: reconstruye cada propuesta del LLM desde el catálogo real
+ * y descarta las que referencian secciones inexistentes, omiten/duplican ramos, tienen
+ * choques o violan días prohibidos / profesores excluidos.
+ */
+export function validarPropuestasLLM(
+  cursosBase: Curso[],
+  restricciones: RestriccionesEstudiante,
+  propuestas: PropuestaLLM[]
+): { validas: OpcionHorario[]; rechazadas: number } {
+  const requeridos = restricciones.ramos_requeridos;
+  const indicePorCodigo = new Map(
+    cursosBase.filter(c => requeridos.includes(c.codigo)).map((c, i) => [c.codigo, { curso: c, index: i }])
+  );
+
+  const validas: OpcionHorario[] = [];
+  const firmas = new Set<string>();
+  let rechazadas = 0;
+
+  propuestas.forEach((prop, idx) => {
+    const seleccion = Array.isArray(prop?.secciones_seleccionadas) ? prop.secciones_seleccionadas : [];
+    const combo: RamoCombinacion[] = [];
+
+    for (const sel of seleccion) {
+      const entrada = indicePorCodigo.get(sel?.codigo);
+      const sec = entrada?.curso.secciones.find(s => s.seccion === Number(sel?.seccion));
+      if (!entrada || !sec) break; // sección inventada por el LLM
+      combo.push(aRamoCombinacion(entrada.curso, sec, entrada.index));
+    }
+
+    const codigosCombo = new Set(combo.map(r => r.codigo));
+    const cubreTodos =
+      combo.length === seleccion.length &&
+      combo.length === requeridos.length &&
+      codigosCombo.size === requeridos.length &&
+      requeridos.every(c => codigosCombo.has(c));
+
+    if (!cubreTodos || !evaluarCombinacionValida(combo)) {
+      rechazadas++;
+      return;
+    }
+
+    const evalRes = calcularHuecosYScore(combo, restricciones);
+    const firma = firmaCombinacion(combo);
+    if (evalRes.score <= 0 || firmas.has(firma)) {
+      rechazadas++;
+      return;
+    }
+    firmas.add(firma);
+
+    const pros = prop.descripcion_resumen
+      ? [`Gemini: ${prop.descripcion_resumen}`, ...evalRes.pros]
+      : evalRes.pros;
+
+    validas.push({
+      id: `llm-${idx + 1}`,
+      score: evalRes.score,
+      resumen_pros: pros,
+      total_creditos: combo.reduce((acc, r) => acc + r.creditos, 0),
+      huecos_horas: evalRes.huecos,
+      ramos: combo,
+      origen: 'llm',
+      nombre: prop.nombre_opcion
+    });
+  });
+
+  return { validas, rechazadas };
+}
+
+/**
+ * Combina las propuestas validadas del LLM (primero) con las del motor determinista,
+ * sin duplicar combinaciones, hasta completar `max` opciones.
+ */
+export function combinarOpciones(llm: OpcionHorario[], motor: OpcionHorario[], max = 3): OpcionHorario[] {
+  const firmas = new Set(llm.map(o => firmaCombinacion(o.ramos)));
+  const extra = motor.filter(o => !firmas.has(firmaCombinacion(o.ramos)));
+  return [...llm, ...extra].slice(0, max);
+}
+
 export function optimizarHorariosLocal(
   cursosBase: Curso[],
   restricciones: RestriccionesEstudiante
@@ -117,18 +212,9 @@ export function optimizarHorariosLocal(
   if (cursosSeleccionados.length === 0) return [];
 
   // Mapear cada curso con sus opciones de secciones
-  const opcionesSeccionesPorCurso: RamoCombinacion[][] = cursosSeleccionados.map((curso, index) => {
-    const colorScheme = COLOR_PALETTE[index % COLOR_PALETTE.length];
-    return curso.secciones.map(sec => ({
-      codigo: curso.codigo,
-      nombre: curso.nombre,
-      seccion: sec.seccion,
-      profesor: sec.profesor,
-      creditos: curso.creditos,
-      bloques: sec.bloques,
-      color: colorScheme.bg
-    }));
-  });
+  const opcionesSeccionesPorCurso: RamoCombinacion[][] = cursosSeleccionados.map((curso, index) =>
+    curso.secciones.map(sec => aRamoCombinacion(curso, sec, index))
+  );
 
   // Generar producto cartesiano
   function cartesian(arr: RamoCombinacion[][]): RamoCombinacion[][] {
@@ -152,7 +238,8 @@ export function optimizarHorariosLocal(
           resumen_pros: evalRes.pros,
           total_creditos: totalCreditos,
           huecos_horas: evalRes.huecos,
-          ramos: combo
+          ramos: combo,
+          origen: 'motor'
         });
       }
     }

@@ -50,7 +50,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSqlModal, isConnectedSupab
           {/* IA Status Badge */}
           <div className="hidden md:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-purple-950/40 text-purple-300 border border-purple-800/40">
             <Cpu className="h-3.5 w-3.5 text-purple-400" />
-            <span>LLM Gemini 2.0</span>
+            <span>LLM Gemini</span>
           </div>
 
           {/* Validation Shield */}

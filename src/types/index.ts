@@ -51,6 +51,15 @@ export interface OpcionHorario {
   total_creditos: number;
   huecos_horas: number;
   ramos: RamoCombinacion[];
+  origen?: 'llm' | 'motor'; // Propuesta de Gemini validada, o generada por el motor determinista
+  nombre?: string;          // Nombre sugerido por el LLM (ej: "Opción Viernes Libre")
+}
+
+// Respuesta cruda de /api/optimize (antes del guardrail)
+export interface PropuestaLLM {
+  nombre_opcion?: string;
+  descripcion_resumen?: string;
+  secciones_seleccionadas?: { codigo: string; seccion: number }[];
 }
 
 export interface OptimizationResponse {

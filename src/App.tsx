@@ -10,7 +10,8 @@ import { ExportModal } from './components/ExportModal';
 import { SupabaseDataModal } from './components/SupabaseDataModal';
 import { Curso, RestriccionesEstudiante, OpcionHorario } from './types';
 import { MOCK_COURSES } from './data/mockCourses';
-import { optimizarHorariosLocal } from './lib/optimizer';
+import { optimizarHorariosLocal, validarPropuestasLLM, combinarOpciones } from './lib/optimizer';
+import { solicitarPropuestasLLM } from './lib/llm';
 import { fetchCursosFromSupabase, guardarLogOptimizacion } from './lib/supabase';
 import { Sparkles, Zap, RefreshCw, AlertTriangle, Layers, Calendar, CheckCircle2, ShieldCheck } from 'lucide-react';
 
@@ -35,6 +36,7 @@ export const App: React.FC = () => {
   const [isConnectedSupabase, setIsConnectedSupabase] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [fuenteMsg, setFuenteMsg] = useState<string | null>(null);
 
   // Load courses from Supabase on mount
   useEffect(() => {
@@ -75,38 +77,59 @@ export const App: React.FC = () => {
     setSelectedCodigos([]);
   };
 
-  const handleGenerarHorarios = () => {
+  const handleGenerarHorarios = async () => {
     if (selectedCodigos.length === 0) {
       setErrorMsg('Debes seleccionar al menos 1 ramo para optimizar el horario.');
       return;
     }
 
     setErrorMsg(null);
+    setFuenteMsg(null);
     setIsGenerating(true);
+    const inicio = performance.now();
 
-    setTimeout(() => {
-      const resultados = optimizarHorariosLocal(cursos, restricciones);
-      setIsGenerating(false);
+    // 1. Motor determinista: siempre disponible (fallback y relleno de opciones)
+    const opcionesMotor = optimizarHorariosLocal(cursos, restricciones);
 
-      if (resultados.length === 0) {
-        setErrorMsg('No se encontraron combinaciones sin choques para los ramos y restricciones seleccionados. Intenta liberar días prohibidos o quitar algún ramo conflictivo.');
-        setOpciones([]);
-        setSelectedOpcionId(null);
-      } else {
-        setOpciones(resultados);
-        setSelectedOpcionId(resultados[0].id);
+    // 2. Gemini vía /api/optimize + guardrail anti-alucinaciones
+    let opcionesLLM: OpcionHorario[] = [];
+    let fuente: string;
+    try {
+      const llm = await solicitarPropuestasLLM(cursos, restricciones);
+      const { validas, rechazadas } = validarPropuestasLLM(cursos, restricciones, llm.opciones);
+      opcionesLLM = validas;
+      fuente = `${llm.modelo}: ${validas.length} propuesta(s) validada(s)` +
+        (rechazadas > 0 ? `, ${rechazadas} rechazada(s) por el guardrail` : '') +
+        ` · ${llm.latencia_ms} ms`;
+    } catch (err) {
+      console.warn('LLM no disponible, usando motor determinista', err);
+      fuente = 'Gemini no disponible: resultados del motor determinista';
+    }
 
-        // Confetti celebration for successful generation!
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
+    const resultados = combinarOpciones(opcionesLLM, opcionesMotor);
+    const tiempoMs = Math.round(performance.now() - inicio);
+    setIsGenerating(false);
 
-        // Log optimization asynchronously
-        guardarLogOptimizacion(restricciones.usuario, selectedCodigos, resultados[0].id);
-      }
-    }, 400);
+    if (resultados.length === 0) {
+      setErrorMsg('No se encontraron combinaciones sin choques para los ramos y restricciones seleccionados. Intenta liberar días prohibidos o quitar algún ramo conflictivo.');
+      setOpciones([]);
+      setSelectedOpcionId(null);
+      return;
+    }
+
+    setFuenteMsg(fuente);
+    setOpciones(resultados);
+    setSelectedOpcionId(resultados[0].id);
+
+    // Confetti celebration for successful generation!
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+
+    // Log optimization asynchronously
+    guardarLogOptimizacion(restricciones, resultados, tiempoMs);
   };
 
   const opcionSeleccionada = opciones.find(o => o.id === selectedOpcionId) || opciones[0] || null;
@@ -200,6 +223,9 @@ export const App: React.FC = () => {
                 <p className="text-xs text-slate-400">
                   Selecciona una opción para visualizar su grilla semanal detallada en el calendario
                 </p>
+                {fuenteMsg && (
+                  <p className="text-[11px] text-purple-300 mt-1">{fuenteMsg}</p>
+                )}
               </div>
 
               <div className="flex items-center space-x-2 text-xs font-semibold px-3 py-1 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-800">

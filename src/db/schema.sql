@@ -44,3 +44,21 @@ CREATE TABLE IF NOT EXISTS optimizaciones_log (
 
 -- Habilitar RLS (Row Level Security) para Capa 2 BBDD
 ALTER TABLE optimizaciones_log ENABLE ROW LEVEL SECURITY;
+
+-- Políticas RLS
+-- Logs: la app (rol anon) solo puede INSERTAR; no puede leer logs de otros usuarios.
+DROP POLICY IF EXISTS "anon_inserta_logs" ON optimizaciones_log;
+CREATE POLICY "anon_inserta_logs" ON optimizaciones_log
+    FOR INSERT TO anon, authenticated WITH CHECK (true);
+
+-- Catálogo académico: lectura pública, escritura solo desde el panel / service_role.
+ALTER TABLE cursos ENABLE ROW LEVEL SECURITY;
+ALTER TABLE secciones ENABLE ROW LEVEL SECURITY;
+ALTER TABLE bloques_horario ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "lectura_publica_cursos" ON cursos;
+CREATE POLICY "lectura_publica_cursos" ON cursos FOR SELECT TO anon, authenticated USING (true);
+DROP POLICY IF EXISTS "lectura_publica_secciones" ON secciones;
+CREATE POLICY "lectura_publica_secciones" ON secciones FOR SELECT TO anon, authenticated USING (true);
+DROP POLICY IF EXISTS "lectura_publica_bloques" ON bloques_horario;
+CREATE POLICY "lectura_publica_bloques" ON bloques_horario FOR SELECT TO anon, authenticated USING (true);

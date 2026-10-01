@@ -1,59 +1,42 @@
 # Resumen del Estado del Proyecto · OptiRamos
 
-**Fecha de actualización**: 30 de Septiembre, 2026  
+**Fecha de actualización**: 1 de Octubre, 2026  
 **Integrantes**: Martin Droppelmann y Eduardo Behncke  
 **Asignatura**: Automatización e IA para MVPs (MBAn UAI)  
 **Track**: Track B (Producto Propio / MVP SaaS)  
-**Repositorio GitHub**: [eduardobehncke/Proyecto-Automatizaci-n](https://github.com/eduardobehncke/Proyecto-Automatizaci-n)
+**Repositorio GitHub**: [eduardobehncke/Proyecto-Automatizaci-n](https://github.com/eduardobehncke/Proyecto-Automatizaci-n)  
+**Demo en producción**: [proyecto-automatizaci-n.vercel.app](https://proyecto-automatizaci-n.vercel.app)
 
 ---
 
-## 📌 Estado Actual del Proyecto (Entregable Final & Checkpoint Verificado)
+## ✅ Hecho y verificado
 
-Hemos completado al 100% los requisitos de la rúbrica oficial (4 Capas 1 + 4 Capas 2 + Estudio de Mercado Track B + Evidencia):
+1. **Documento Maestro (`README.md`)**: 11 secciones obligatorias, arquitectura, matriz de 4 verticales, estudio de mercado Track B (ICP, FODA, Porter, referentes, modelo de negocio, unit economics, North-Star, roadmap), costos y roles.
+2. **Encuesta de demanda (N=5)**: resultados reales tabulados en [`evidencia/respuestas_encuesta.md`](evidencia/respuestas_encuesta.md) con capturas en [`evidencia/capturas_encuesta/`](evidencia/capturas_encuesta/).
+3. **Frontend React + Vite + Tailwind v4** desplegado en Vercel (dos proyectos: `proyecto-automatizaci-n` y `proyecto-automatizaci-n-2q7k`; conviene eliminar el duplicado).
+4. **Integración real con Gemini (Capa 1 IA)**:
+   * Función serverless [`api/optimize.ts`](api/optimize.ts) que carga el prompt versionado [`optimizer_prompt.txt`](src/prompts/optimizer_prompt.txt) (v1.1) y exige JSON estricto.
+   * Guardrail `validarPropuestasLLM` en [`optimizer.ts`](src/lib/optimizer.ts): reconstruye cada propuesta desde el catálogo y rechaza secciones inventadas, ramos faltantes o extra, choques, días prohibidos y profesores excluidos.
+   * Fallback automático al motor determinista si Gemini falla, hay timeout o la key no está configurada.
+   * La UI indica si cada opción viene de Gemini o del motor determinista.
+5. **Supabase (código listo)**: consultas alineadas con `schema.sql`, log de optimizaciones con las columnas correctas, políticas RLS (lectura pública del catálogo, solo INSERT en logs) y [`seed.sql`](src/db/seed.sql) con la oferta piloto.
+6. **Build de producción**: `npm run build` pasa sin errores.
 
-1. **Documento Maestro Completo (`README.md`)**:
-   * Las **11 Secciones Obligatorias** estructuradas según la pauta oficial del curso.
-   * **Identificación, Resumen Ejecutivo, Problema + Filtro VRR (Verde en las 3 luces)**.
-   * **Diagrama de Arquitectura de Solución** (Frontend Vercel -> Supabase -> Gemini LLM -> Engine TypeScript Determinista).
-   * **Matriz de las 4 Verticales** documentando el cumplimiento de las 4 Capas 1 obligatorias y las 4 Capas 2 bonus (+1.0 pts).
-   * **Touchpoint del Usuario**, Setup Local y Variables de Entorno.
-   * **Estudio de Mercado Track B**: Perfil ICP, Matriz **FODA**, **5 Fuerzas de Porter**, Matriz Comparativa de Referentes del Mercado (BuscoRamos, Excel, Portales oficiales), **Modelo de Negocio**, **Pricing con Unit Economics** (Margen 99.8%), **Métrica North-Star** y **Roadmap v1.0 a v3.0**.
-   * **Costos de Operación Mensual Auditables** (~$2.80 USD / ~$2.650 CLP al mes para 500 usuarios activos).
-   * **Limitaciones, Próximos Pasos y Roles del Equipo** (Martin Droppelmann & Eduardo Behncke).
+## ⏳ Pendiente (requiere acción del equipo)
 
-2. **Evidencia de Campo (`/evidencia`)**:
-   * [`evidencia/respuestas_encuesta.md`](file:///c:/Users/Waro/Desktop/Proyecto%20automatizacion/evidencia/respuestas_encuesta.md): Estructura de la encuesta distribuida en **Google Forms** a alumnos del MBAn y pregrado UAI, lista para adjuntar las respuestas reales y capturas exportadas.
-   * [`evidencia/evidencia_verticales.md`](file:///c:/Users/Waro/Desktop/Proyecto%20automatizacion/evidencia/evidencia_verticales.md): Matriz de evidencias de las 4 verticales y sus artefactos.
+1. **Gemini**: ✅ key creada en Google AI Studio (nivel gratuito) y probada localmente. Modelo principal `gemini-flash-lite-latest` (1-2,3 s) y respaldo `gemini-3.5-flash`; `gemini-2.5-flash` ya no está disponible (404). Falta agregar `GEMINI_API_KEY` en Vercel y hacer redeploy.
+2. **Supabase**: crear el proyecto, ejecutar `schema.sql` y `seed.sql` en el SQL Editor, y agregar `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` en Vercel.
+3. **Evidencia de funcionamiento**: con lo anterior configurado, capturar una optimización con el badge "Propuesta por Gemini" y una fila en `optimizaciones_log`, y agregarlas a `evidencia/`.
+4. **Revisar el README**:
+   * Recalcular los costos de Gemini (secciones 8.6 y 9) con el modelo real (`gemini-flash-lite-latest`; en el MVP se usa el nivel gratuito).
+   * Unificar la cantidad de opciones: el README y la encuesta dicen "2 horarios", y la app muestra hasta 3.
+   * Línea base: el README usa 3.5 horas y la encuesta muestra que el 80% tarda más de 4 horas.
 
-3. **Base de Datos Relacional (`src/db/schema.sql` y `src/lib/supabase.ts`)**:
-   * Esquema DDL SQL completo para Supabase Postgres (tablas de `cursos`, `secciones`, `bloques_horario`, `optimizaciones_log` y políticas RLS activadas).
-   * Cliente de conexión Supabase en TypeScript con fallback local offline.
+## 🎯 Estado por vertical
 
-4. **Prompt Versionado de IA (`src/prompts/optimizer_prompt.txt`)**:
-   * Instrucciones estructuradas para Gemini 1.5 Flash exigiendo formato JSON de 3 alternativas y cero traslapes.
-
-5. **Motor Backend Demostración (`src/backend/optimizer_demo.py`)**:
-   * Script funcional en Python que simula la consulta a Supabase y genera 3 alternativas sin choques en consola (`exit code 0`).
-
-6. **Desarrollo Frontend Web en React + Vite + Tailwind v4 (`src/`)**:
-   * Landing page moderna e interactiva, panel de restricciones (días libres, tramos mañana/tarde, minimización de huecos).
-   * Calendario semanal visual con tarjetas codificadas por color, salas, profesores y score.
-   * Motor de validación determinista (`src/lib/optimizer.ts`) anti-alucinaciones que garantiza 0% traslapes.
-   * Exportación a Google Calendar / iCal (`.ics`), CSV, portapapeles y modal de inspección SQL.
-   * Configuración Vercel (`vercel.json`, `vite.config.ts`) lista y verificada.
-   * Build de producción comprobado (`npm run build` -> `exit code 0`).
-
----
-
-## 🎯 Estado de Entregables para Evaluación
-
-* ✅ **Capa 1 Automatización**: Flujo end-to-end con gatillo y manejo de errores.
-* ✅ **Capa 1 IA**: Llamada a LLM Gemini real con prompt versionado.
-* ✅ **Capa 1 BBDD**: Persistencia de logs de consultas.
-* ✅ **Capa 1 Front**: Touchpoint documentado.
-* 🌟 **Capa 2 Automatización (Bonus)**: Código propio TypeScript y Python desarrollado con copiloto AI.
-* 🌟 **Capa 2 IA (Bonus)**: Engine determinista anti-alucinaciones / guardrail JSON.
-* 🌟 **Capa 2 BBDD (Bonus)**: Supabase Postgres relacional + RLS habilitado.
-* 🌟 **Capa 2 Front (Bonus)**: UI Web interactiva publicada en Vercel con calendario e iCal.
-* 📊 **Estudio de Mercado Track B**: FODA, Porter, Referentes, Encuestas (N=8), Unit Economics, North-Star, Roadmap.
+| Vertical | Capa 1 | Capa 2 |
+| :--- | :--- | :--- |
+| Automatización | ✅ Flujo end-to-end con gatillo web y manejo de errores/fallback | ✅ Código propio TS + Python |
+| IA | ✅ Código listo; falta configurar la key en Vercel | ✅ Guardrail anti-alucinaciones probado |
+| BBDD | ⏳ Código listo; falta crear el proyecto Supabase | ⏳ Schema relacional + RLS listos para ejecutar |
+| Front | ✅ Touchpoint documentado | ✅ UI publicada en Vercel |
